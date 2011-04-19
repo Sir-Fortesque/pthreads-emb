@@ -85,7 +85,7 @@ typedef struct pte_thread_t_ pte_thread_t;
 struct pte_thread_t_
   {
     pte_osThreadHandle threadId;      /* OS specific thread handle */
-    pthread_t ptHandle;		/* This thread's permanent pthread_t handle */
+    // pthread_t ptHandle;		/* This thread's permanent pthread_t handle */
     pte_thread_t * prevReuse;	/* Links threads on reuse stack */
     volatile PThreadState state;
     void *exitStatus;
@@ -105,6 +105,8 @@ int implicit:
     1;
     void *keys;
     void *nextAssoc;
+
+    unsigned int x;             /* Extra information - reuse count etc */
   };
 
 

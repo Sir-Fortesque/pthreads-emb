@@ -57,7 +57,7 @@ pte_thread_detach_common (unsigned char threadShouldExit)
       if (sp != NULL) // otherwise OS thread with no implicit POSIX handle.
         {
 
-          pte_callUserDestroyRoutines (sp->ptHandle);
+          pte_callUserDestroyRoutines (sp);
 
           (void) pthread_mutex_lock (&sp->cancelLock);
           sp->state = PThreadStateLast;
@@ -72,11 +72,11 @@ pte_thread_detach_common (unsigned char threadShouldExit)
             {
               if (threadShouldExit)
                 {
-                  pte_threadExitAndDestroy (sp->ptHandle);
+                  pte_threadExitAndDestroy (sp);
                 }
               else
                 {
-                  pte_threadDestroy (sp->ptHandle);
+                  pte_threadDestroy (sp);
                 }
 
               // pte_osTlsSetValue (pte_selfThreadKey->key, NULL);

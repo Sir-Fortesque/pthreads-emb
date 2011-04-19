@@ -187,6 +187,9 @@ pte_threadStart.o: pte_threadStart.c
 
 endif
 
+test :
+	make -C ../../tests test
+
 install: $(TARGET_LIB)
 	@cp -v $(TARGET_LIB) `psp-config --psp-prefix`/lib
 	@cp -v *.h `psp-config --psp-prefix`/include

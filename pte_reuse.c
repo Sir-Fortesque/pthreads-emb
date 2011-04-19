@@ -84,7 +84,7 @@
 pthread_t
 pte_threadReusePop (void)
 {
-  pthread_t t = {NULL, 0};
+  pthread_t t = NULL;
 
 
   pte_osMutexLock (pte_thread_reuse_lock);
@@ -104,7 +104,7 @@ pte_threadReusePop (void)
 
       tp->prevReuse = NULL;
 
-      t = tp->ptHandle;
+      t = tp;
     }
 
   pte_osMutexUnlock(pte_thread_reuse_lock);
@@ -122,23 +122,23 @@ pte_threadReusePop (void)
 void
 pte_threadReusePush (pthread_t thread)
 {
-  pte_thread_t * tp = (pte_thread_t *) thread.p;
+  pte_thread_t * tp = (pte_thread_t *) thread;
   pthread_t t;
 
 
   pte_osMutexLock (pte_thread_reuse_lock);
 
-  t = tp->ptHandle;
+  t = tp;
   memset(tp, 0, sizeof(pte_thread_t));
 
   /* Must restore the original POSIX handle that we just wiped. */
-  tp->ptHandle = t;
+  tp = t;
 
   /* Bump the reuse counter now */
 #ifdef PTE_THREAD_ID_REUSE_INCREMENT
-  tp->ptHandle.x += PTE_THREAD_ID_REUSE_INCREMENT;
+  tp->x += PTE_THREAD_ID_REUSE_INCREMENT;
 #else
-  tp->ptHandle.x++;
+  tp->x++;
 #endif
 
   tp->prevReuse = PTE_THREAD_REUSE_EMPTY;

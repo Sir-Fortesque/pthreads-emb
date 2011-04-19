@@ -398,7 +398,7 @@ enum
         unsigned int x;             /* Extra information - reuse count etc */
       } pte_handle_t;
 
-    typedef pte_handle_t pthread_t;
+    typedef /* pte_handle_t */ void * pthread_t;
     typedef struct pthread_attr_t_ * pthread_attr_t;
     typedef struct pthread_once_t_ pthread_once_t;
     typedef struct pthread_key_t_ * pthread_key_t;
