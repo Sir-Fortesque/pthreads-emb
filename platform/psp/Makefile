@@ -5,7 +5,10 @@ CLEANUP_TYPE=C
 VPATH = ../..:../helper
 
 TARGET_LIB = libpthread-psp.a
-
+PREFIX = $(shell psp-config --psp-prefix)
+LIB_DIR = $(PREFIX)/lib
+INCLUDE_DIR = $(PREFIX)/include
+INSTALL = /usr/bin/install
 
 MUTEX_OBJS = \
   pthread_mutex_unlock.o \
@@ -191,7 +194,9 @@ test :
 	make -C ../../tests test
 
 install: $(TARGET_LIB)
-	@cp -v $(TARGET_LIB) `psp-config --psp-prefix`/lib
-	@cp -v *.h `psp-config --psp-prefix`/include
+	$(INSTALL) -d $(LIB_DIR)
+	$(INSTALL) $(TARGET_LIB) $(LIB_DIR)
+	$(INSTALL) -d $(INCLUDE_DIR)
+	$(INSTALL) *.h $(INCLUDE_DIR)
 	@echo "Done."
 
